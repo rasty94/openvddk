@@ -1,0 +1,1 @@
+{"nodes": [{"id": "docs_decisions_d_0010_no_hosted_ci", "label": "D-0010 No hosted CI; gate runs in pinned container", "file_type": "document", "source_file": "docs/decisions/D-0010-no-hosted-ci.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}

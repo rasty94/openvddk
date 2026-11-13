@@ -3,3 +3,4 @@
 * text=auto eol=lf
 *.png binary
 *.gz binary
+graphify-out/graph.json merge=graphify
