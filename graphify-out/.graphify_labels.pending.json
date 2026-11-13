@@ -1,0 +1,16 @@
+{
+  "1": "file_test.go",
+  "12": "exports.go",
+  "22": "Config",
+  "25": "Disk",
+  "26": "Record",
+  "30": "hotadd.go",
+  "36": "Parse",
+  "56": "Login",
+  "57": "sync.Mutex",
+  "58": "nbdDisk",
+  "75": "fakeHost",
+  "86": "spreadOver",
+  "89": "FuzzParseOpenReply",
+  "139": "CLAUDE.md"
+}

@@ -1,18 +1,23 @@
-# Graph Report - openvddk  (2026-11-12)
+# Graph Report - openvddk  (2026-11-13)
 
 ## Corpus Check
-- 318 files · ~287,280 words
+- 319 files · ~287,518 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 15 file(s) not represented in the graph (top: (none) 11, .map 1, .in 1)
 
 ## Summary
-- 2262 nodes · 6311 edges · 139 communities (96 shown, 43 thin omitted)
+- 2264 nodes · 6312 edges · 140 communities (95 shown, 45 thin omitted)
 - Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 870 edges (avg confidence: 0.83)
 - Token cost: 0 input · 0 output
 
+## Graph Freshness
+- Built from commit: `209215f9`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
+
 ## Community Hubs (Navigation)
 - Go Admin Bundle and Journal
-- Go Config Collection
+- file_test.go
 - C ABI Headers and Layout
 - C Shim Runtime
 - Bundle Redaction Tests
@@ -23,7 +28,7 @@
 - TLS and NBD Sessions
 - ELF Debug Inspection
 - Fake Host Test Doubles
-- CABI Error Exports
+- exports.go
 - NBD-0002 Async Read Faults
 - Go Slice and Action Helpers
 - HotAdd Worker Boot Order
@@ -33,21 +38,21 @@
 - HotAdd Transport Decisions
 - Connection Lifecycle
 - Journal and Attachment Tests
-- Async Finish and Wipe
+- Config
 - HotAdd Qualification Catalogue
 - VixDiskLib Info and Blocks
-- Disk Allocation Accounting
-- govmomi Task Fakes
+- Disk
+- Record
 - Config and Benchmarks
 - NBD Disk Read Path
 - Fuzz Parser Tests
-- Host Identity Accessors
+- hotadd.go
 - Memory Reader Helpers
 - HotAdd Recovery Semantics
 - HotAdd Device Read Behavior
 - NBD Transport List Rules
 - govmomi VM Controllers
-- Connect and BIOS UUID Checks
+- Parse
 - TLS Refusal Handling
 - Transport and ReadAsync Rules
 - ConnectEx and Diagnostic Bundle
@@ -67,9 +72,9 @@
 - VixDisk Info Helpers
 - NBD Multi-Connection Limits
 - Binary Kit and Worker Setup
-- govmomi Simulator Fixtures
-- NBD Open Error Codes
-- Host Boot Identity
+- Login
+- sync.Mutex
+- nbdDisk
 - Architecture and ABI Status
 - Allocation Maps via NFC
 - Release Check Matrices
@@ -86,7 +91,7 @@
 - Host Not-Connected Handling
 - Vix Errors and Transports
 - Skipz Compression Observations
-- Trace Diff Tooling
+- fakeHost
 - Contributing and DCO
 - ABI Artifacts and Build Container
 - Changed Block Tracking
@@ -97,10 +102,10 @@
 - NFC Timeout Configuration
 - Trace Message Tools
 - Independent Disk Reads
-- IO Gate Behavior
+- spreadOver
 - HotAdd Negative Cases
 - NFC Reads Over TLS
-- HCTL Device Parsing
+- FuzzParseOpenReply
 - Selftest Shell Helpers
 - Implementation Language Decisions
 - Build Platform Decisions
@@ -141,6 +146,7 @@
 - Artifact Naming Decision
 - No Hosted CI Decision
 - Module Root
+- CLAUDE.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `VixError` - 56 edges
@@ -157,56 +163,56 @@
 ## Surprising Connections (you probably didn't know these)
 - `BufSizeIn64KB buffer size key` --semantically_similar_to--> `Slow storage keys and sessions`  [INFERRED] [semantically similar]
   docs/observations/NBD-0027-sessions-nfc-buffers-and-async-read-ahead.md → evalkit/KNOWN-DIFFERENCES.md
+- `Missing snapshot returns 13003` --semantically_similar_to--> `Silent NBD switch for missing snapshot`  [INFERRED] [semantically similar]
+  evalkit/KNOWN-DIFFERENCES.md → docs/observations/NBD-0029-vddk803-rechecks-on-67.md
 - `nfc ReadTimeoutMs and RequestTimeoutMs keys` --semantically_similar_to--> `OpenVDDK configuration keys`  [INFERRED] [semantically similar]
   docs/observations/NBD-0028-vmware-config-keys-observed.md → evalkit/README.md
 - `Lost NFC connection during read returns 14009` --semantically_similar_to--> `VMware library SIGPIPE on silent host`  [INFERRED] [semantically similar]
   evalkit/KNOWN-DIFFERENCES.md → docs/observations/NBD-0028-vmware-config-keys-observed.md
-- `Missing snapshot returns 13003` --semantically_similar_to--> `Silent NBD switch for missing snapshot`  [INFERRED] [semantically similar]
-  evalkit/KNOWN-DIFFERENCES.md → docs/observations/NBD-0029-vddk803-rechecks-on-67.md
-- `session_open()` --calls--> `VixDiskLib_InitEx()`  [INFERRED]
-  devkit/examples/common.h → cabi/shim.c
+- `TestConformDiff()` --calls--> `write()`  [INFERRED]
+  tools/ovxtool/ovxtool_test.go → internal/linuxdev/linuxdev_test.go
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **HotAdd transaction lifecycle** — contract_hotadd_state_machine, contract_hotadd_journal, contract_hotadd_recovery, contract_hotadd_cleanup, contract_proxy_identification, contract_device_identity [INFERRED 0.85]
-- **Ordered transport list and fallback** — contract_hotadd, contract_nbdssl, contract_nbd, contract_san, contract_transport_fallback [EXTRACTED 1.00]
-- **Data integrity outranks bug-for-bug compatibility** — contract_data_integrity_priority, contract_data_corruption_policy, contract_unsupported_fail_explicit, contract_deviation_policy [INFERRED 0.75]
-- **HotAdd attach-read-detach pipeline** — architecture_hotadd_transaction, architecture_internal_hotadd, architecture_internal_linuxdev, architecture_hotadd_recovery, security_hotadd_host_safety [EXTRACTED 1.00]
 - **ABI verification gates** — compatibility_vixdisklib_8_0_3, compatibility_status_levels, testing_abi_gate, testing_conformance_harness, abi_transcript_cases [EXTRACTED 1.00]
 - **Clean-room provenance policy** — contributing_clean_room_rule, docs_clean_room_method, docs_clean_room_sources, docs_clean_room_exclusions, provenance_evidence_categories [EXTRACTED 1.00]
-- **Read-ahead design decisions (window, single-reader release, run-based ramp)** — docs_decisions_d_0017_readahead_tolerates_reordering, docs_decisions_d_0019_readahead_releases_behind_single_reader, docs_decisions_d_0020_readahead_grows_with_the_run [INFERRED 0.85]
-- **HotAdd proxy identity and safe cleanup** — docs_decisions_d_0014_hotadd_implementation, docs_decisions_d_0016_proxies_without_disk_ids, docs_decisions_d_0018_shared_bios_uuid_refuses_hotadd, docs_security_review_0_7_0_hotadd_close_deletes_device_by_name, docs_security_review_0_7_0_recovery_deletes_journal_redo_paths [INFERRED 0.85]
-- **NFC session count, buffer size and host NFC memory limit** — docs_tuning_nbd_sessions, docs_tuning_nfc_buffer_size, docs_tuning_host_nfc_memory_limit, docs_security_review_0_7_4_multi_session_close_waits_per_session [INFERRED 0.85]
-- **Reference-parity failure handling** — docs_decisions_d_0021_log_line_format, docs_decisions_d_0023_negative_cases, docs_decisions_d_0028_read_failures, docs_decisions_d_0032_permission_refusals [INFERRED 0.75]
-- **QueryAllocatedBlocks answer sources over HotAdd** — docs_decisions_d_0035_allocated_blocks_from_vcenter, docs_decisions_d_0036_allocated_blocks_over_nfc, docs_decisions_d_0035_allocated_blocks_from_vcenter_changed_areas, docs_decisions_d_0036_allocated_blocks_over_nfc_host_map [INFERRED 0.85]
-- **NBD and NBDSSL rollout on main** — docs_decisions_d_0037_nbd_on_main_hotadd_on_branch, docs_decisions_d_0039_transport_listing_and_fallback, docs_decisions_d_0040_four_reader_nbd_rate_accepted, docs_decisions_d_0044_hotadd_branch_retired [INFERRED 0.75]
-- **VDDK 8.0.3 reference library evidence** — docs_decisions_d_0046_vddk_803_only_reference, docs_observations_abi_0001_reference_elf_identity, docs_observations_hotadd_0001_reference_hotadd_vsphere7, docs_observations_hotadd_0004_readasync_over_hotadd [INFERRED 0.75]
-- **HotAdd read path and read-ahead** — docs_observations_hotadd_0001_reference_hotadd_vsphere7, docs_observations_hotadd_0004_readasync_over_hotadd, docs_observations_hotadd_0005_nbdkit_and_readahead, docs_observations_hotadd_0010_200gb_library_swap_test, docs_observations_hotadd_0011_multithreaded_readers [INFERRED 0.75]
-- **NFC session and buffer configuration** — docs_decisions_d_0045_several_nfc_sessions_per_disk, docs_decisions_d_0048_nfc_buffers_and_async_read_ahead, docs_decisions_d_0049_more_vmware_keys_honoured, docs_decisions_d_0051_openvddk_key_prefix_documented, docs_decisions_d_0052_direct_esxi_connections [INFERRED 0.75]
-- **Worker reset with a source disk attached: recovery** — docs_observations_hotadd_0027_worker_reset_with_a_disk_attached, docs_observations_hotadd_0032_worker_restart_protected, docs_observations_hotadd_0024_administrative_program [INFERRED 0.75]
-- **Read-ahead behaviour on latency and memory paths** — docs_observations_hotadd_0012_device_reads_per_read_call, docs_observations_hotadd_0016_thread_matrix_ram_path, docs_observations_hotadd_0017_extent_reads_with_gaps, docs_observations_hotadd_0018_nfs_v3_path [INFERRED 0.75]
-- **Refusal rather than guessing a device or VM identity** — docs_observations_hotadd_0014_duplicate_bios_uuid, docs_observations_hotadd_0015_same_disk_two_processes, docs_observations_hotadd_0033_proxy_mac_change [INFERRED 0.75]
-- **NFS source outage: worker crash versus no vCPU hold on ESXi 8** — docs_observations_hotadd_0038_source_datastore_outage_proxy_kernel_crash_on_outage, docs_observations_hotadd_0038_source_datastore_outage_hardlockup_panic_setting, docs_observations_hotadd_0039_datastore_outage_vsphere_80_no_vcpu_hold_on_esxi8, docs_observations_hotadd_0038_source_datastore_outage_cleanup_after_crash_asymmetry [INFERRED 0.75]
+- **HotAdd attach-read-detach pipeline** — architecture_hotadd_transaction, architecture_internal_hotadd, architecture_internal_linuxdev, architecture_hotadd_recovery, security_hotadd_host_safety [EXTRACTED 1.00]
 - **HotAdd release checks from 0.6.24 to 0.6.26** — docs_observations_hotadd_0046_hotadd_on_vsphere_67, docs_observations_hotadd_0047_hotadd_on_vsphere_67_and_70, docs_observations_hotadd_0048_host_disconnected_while_attached, docs_observations_hotadd_0049_robustness_and_identification_fix, docs_observations_hotadd_0050_release_0625_measured, docs_observations_hotadd_0051_independent_disks_and_rdm, docs_observations_hotadd_0052_release_0626_measured [EXTRACTED 1.00]
-- **LVM check in the HotAdd library** — docs_observations_hotadd_0036_live_iso_worker_lvm_activates_source_vg, docs_observations_hotadd_0058_lvm_check_under_load_lvmconfig_check_cost, docs_observations_hotadd_0058_lvm_check_under_load_lvmconfig_memo [INFERRED 0.75]
-- **Reference clear-text NBD fallback when NBDSSL was asked for** — docs_observations_nbd_0002_async_faults_consumers_clear_text_after_killed_run, docs_observations_nbd_0004_virt_v2v_negative_tests_clear_text_inspection_opens, docs_observations_nbd_0008_vsphere_67_functional_closure_two_readers_clear_text [INFERRED 0.85]
+- **Ordered transport list and fallback** — contract_hotadd, contract_nbdssl, contract_nbd, contract_san, contract_transport_fallback [EXTRACTED 1.00]
 - **VDDK 7.0.3 and 8.0.3 references compared with the candidate across vSphere labs** — docs_observations_nbd_0005_vsphere_67, docs_observations_nbd_0010_vsphere_67_and_70, docs_observations_nbd_0017_developer_kit_and_vddk7_programs [EXTRACTED 1.00]
 - **Failed Open error codes matched to reference except snapshot not found** — docs_observations_nbd_0003_negative_open_metadata_snapshot_not_found_opens_file, docs_observations_nbd_0011_nbd_matrix_matrix_lab_b, docs_observations_nbd_0018_release_0700_measured_release_0700_regression [INFERRED 0.75]
-- **NBDSSL decryption without AES instructions** — docs_observations_nbd_0023_nbdssl_without_aes_instructions_go_portable_aes, docs_observations_nbd_0023_nbdssl_without_aes_instructions_esxi_aes_only_ciphers, docs_observations_nbd_0023_nbdssl_without_aes_instructions_tls12_aes128_offer, evalkit_known_differences_nbdssl_aes_warning [INFERRED 0.85]
-- **skipz zero elision on the wire** — docs_observations_nbd_0024_migratekit_measured_on_the_wire_skipz_zero_elision, docs_observations_net_0004_skipz_over_nfc_skipz_request_flag, docs_observations_net_0004_skipz_over_nfc_skipz_code3_pieces, docs_observations_net_0004_skipz_over_nfc_strict_skipz_decoding [INFERRED 0.85]
+- **HotAdd read path and read-ahead** — docs_observations_hotadd_0001_reference_hotadd_vsphere7, docs_observations_hotadd_0004_readasync_over_hotadd, docs_observations_hotadd_0005_nbdkit_and_readahead, docs_observations_hotadd_0010_200gb_library_swap_test, docs_observations_hotadd_0011_multithreaded_readers [INFERRED 0.75]
+- **Refusal rather than guessing a device or VM identity** — docs_observations_hotadd_0014_duplicate_bios_uuid, docs_observations_hotadd_0015_same_disk_two_processes, docs_observations_hotadd_0033_proxy_mac_change [INFERRED 0.75]
+- **Data integrity outranks bug-for-bug compatibility** — contract_data_integrity_priority, contract_data_corruption_policy, contract_unsupported_fail_explicit, contract_deviation_policy [INFERRED 0.75]
+- **LVM check in the HotAdd library** — docs_observations_hotadd_0036_live_iso_worker_lvm_activates_source_vg, docs_observations_hotadd_0058_lvm_check_under_load_lvmconfig_check_cost, docs_observations_hotadd_0058_lvm_check_under_load_lvmconfig_memo [INFERRED 0.75]
+- **NBD and NBDSSL rollout on main** — docs_decisions_d_0037_nbd_on_main_hotadd_on_branch, docs_decisions_d_0039_transport_listing_and_fallback, docs_decisions_d_0040_four_reader_nbd_rate_accepted, docs_decisions_d_0044_hotadd_branch_retired [INFERRED 0.75]
+- **NFC session and buffer configuration** — docs_decisions_d_0045_several_nfc_sessions_per_disk, docs_decisions_d_0048_nfc_buffers_and_async_read_ahead, docs_decisions_d_0049_more_vmware_keys_honoured, docs_decisions_d_0051_openvddk_key_prefix_documented, docs_decisions_d_0052_direct_esxi_connections [INFERRED 0.75]
+- **NFS source outage: worker crash versus no vCPU hold on ESXi 8** — docs_observations_hotadd_0038_source_datastore_outage_proxy_kernel_crash_on_outage, docs_observations_hotadd_0038_source_datastore_outage_hardlockup_panic_setting, docs_observations_hotadd_0039_datastore_outage_vsphere_80_no_vcpu_hold_on_esxi8, docs_observations_hotadd_0038_source_datastore_outage_cleanup_after_crash_asymmetry [INFERRED 0.75]
+- **Read-ahead behaviour on latency and memory paths** — docs_observations_hotadd_0012_device_reads_per_read_call, docs_observations_hotadd_0016_thread_matrix_ram_path, docs_observations_hotadd_0017_extent_reads_with_gaps, docs_observations_hotadd_0018_nfs_v3_path [INFERRED 0.75]
+- **Reference-parity failure handling** — docs_decisions_d_0021_log_line_format, docs_decisions_d_0023_negative_cases, docs_decisions_d_0028_read_failures, docs_decisions_d_0032_permission_refusals [INFERRED 0.75]
 - **Levers for throughput from slow datastores** — docs_observations_nbd_0027_sessions_nfc_buffers_and_async_read_ahead_buf_size_key, docs_observations_nbd_0027_sessions_nfc_buffers_and_async_read_ahead_one_buffer_at_a_time, docs_observations_nbd_0023_nbdssl_without_aes_instructions_multi_session_candidate, docs_observations_nbd_0026_one_or_several_connections_slow_datastore_multi_conn_mode [INFERRED 0.75]
+- **VDDK 8.0.3 reference library evidence** — docs_decisions_d_0046_vddk_803_only_reference, docs_observations_abi_0001_reference_elf_identity, docs_observations_hotadd_0001_reference_hotadd_vsphere7, docs_observations_hotadd_0004_readasync_over_hotadd [INFERRED 0.75]
+- **Worker reset with a source disk attached: recovery** — docs_observations_hotadd_0027_worker_reset_with_a_disk_attached, docs_observations_hotadd_0032_worker_restart_protected, docs_observations_hotadd_0024_administrative_program [INFERRED 0.75]
+- **QueryAllocatedBlocks answer sources over HotAdd** — docs_decisions_d_0035_allocated_blocks_from_vcenter, docs_decisions_d_0036_allocated_blocks_over_nfc, docs_decisions_d_0035_allocated_blocks_from_vcenter_changed_areas, docs_decisions_d_0036_allocated_blocks_over_nfc_host_map [INFERRED 0.85]
+- **Reference clear-text NBD fallback when NBDSSL was asked for** — docs_observations_nbd_0002_async_faults_consumers_clear_text_after_killed_run, docs_observations_nbd_0004_virt_v2v_negative_tests_clear_text_inspection_opens, docs_observations_nbd_0008_vsphere_67_functional_closure_two_readers_clear_text [INFERRED 0.85]
+- **HotAdd proxy identity and safe cleanup** — docs_decisions_d_0014_hotadd_implementation, docs_decisions_d_0016_proxies_without_disk_ids, docs_decisions_d_0018_shared_bios_uuid_refuses_hotadd, docs_security_review_0_7_0_hotadd_close_deletes_device_by_name, docs_security_review_0_7_0_recovery_deletes_journal_redo_paths [INFERRED 0.85]
+- **HotAdd transaction lifecycle** — contract_hotadd_state_machine, contract_hotadd_journal, contract_hotadd_recovery, contract_hotadd_cleanup, contract_proxy_identification, contract_device_identity [INFERRED 0.85]
+- **NBDSSL decryption without AES instructions** — docs_observations_nbd_0023_nbdssl_without_aes_instructions_go_portable_aes, docs_observations_nbd_0023_nbdssl_without_aes_instructions_esxi_aes_only_ciphers, docs_observations_nbd_0023_nbdssl_without_aes_instructions_tls12_aes128_offer, evalkit_known_differences_nbdssl_aes_warning [INFERRED 0.85]
+- **NFC session count, buffer size and host NFC memory limit** — docs_tuning_nbd_sessions, docs_tuning_nfc_buffer_size, docs_tuning_host_nfc_memory_limit, docs_security_review_0_7_4_multi_session_close_waits_per_session [INFERRED 0.85]
+- **Read-ahead design decisions (window, single-reader release, run-based ramp)** — docs_decisions_d_0017_readahead_tolerates_reordering, docs_decisions_d_0019_readahead_releases_behind_single_reader, docs_decisions_d_0020_readahead_grows_with_the_run [INFERRED 0.85]
+- **skipz zero elision on the wire** — docs_observations_nbd_0024_migratekit_measured_on_the_wire_skipz_zero_elision, docs_observations_net_0004_skipz_over_nfc_skipz_request_flag, docs_observations_net_0004_skipz_over_nfc_skipz_code3_pieces, docs_observations_net_0004_skipz_over_nfc_strict_skipz_decoding [INFERRED 0.85]
 
-## Communities (139 total, 43 thin omitted)
+## Communities (140 total, 45 thin omitted)
 
 ### Community 0 - "Go Admin Bundle and Journal"
 Cohesion: 0.06
-Nodes (40): program(), TestUserAgent(), UserAgent(), init(), FuzzEngine(), ioReply(), Register(), Codes() (+32 more)
+Nodes (39): program(), TestUserAgent(), UserAgent(), init(), FuzzEngine(), ioReply(), Register(), Codes() (+31 more)
 
-### Community 1 - "Go Config Collection"
-Cohesion: 0.06
-Nodes (58): init(), collectConfig(), nbdSettings, canonical(), Empty(), Config, knownOwnKey(), Load() (+50 more)
+### Community 1 - "file_test.go"
+Cohesion: 0.21
+Nodes (23): init(), OwnFile(), Start(), Stop(), fakeCallbacks(), ownDir(), readAll(), TestAllCallbacksNoOwnFile() (+15 more)
 
 ### Community 2 - "C ABI Headers and Layout"
 Cohesion: 0.04
@@ -217,8 +223,8 @@ Cohesion: 0.08
 Nodes (60): call_with_va_list(), flatten(), init_common(), ovx_c_alloc_blocklist(), ovx_c_emit(), set_callbacks(), VixDiskLib_AllocateConnectParams(), VixDiskLib_Attach() (+52 more)
 
 ### Community 4 - "Bundle Redaction Tests"
-Cohesion: 0.06
-Nodes (53): TestBundleArchive(), TestBundleRedaction(), TestBundleSkipsPlantedLogs(), TestReadPassword(), TestUsageAndExitCodes(), cmdBundle(), collectDevices(), collectJournal() (+45 more)
+Cohesion: 0.08
+Nodes (44): TestBundleArchive(), TestBundleRedaction(), TestBundleSkipsPlantedLogs(), TestReadPassword(), cmdBundle(), collectDevices(), collectJournal(), collectLibraries() (+36 more)
 
 ### Community 5 - "Error Kinds and Syscalls"
 Cohesion: 0.13
@@ -233,24 +239,24 @@ Cohesion: 0.09
 Nodes (47): block(), builtin_final(), builtin_init(), builtin_update(), sha256_backend(), sha256_final(), sha256_hex(), sha256_init() (+39 more)
 
 ### Community 8 - "govmomi vSphere Objects"
-Cohesion: 0.07
-Nodes (19): FuzzLVMConfig(), acceptsAll(), ExecRunner(), Protection, parseLVMConfig(), LVMMemo, Ticket, isNotFound() (+11 more)
+Cohesion: 0.06
+Nodes (20): fakePlatform, AttachSpec, DetachSpec, FuzzLVMConfig(), acceptsAll(), ExecRunner(), Protection, parseLVMConfig() (+12 more)
 
 ### Community 9 - "TLS and NBD Sessions"
-Cohesion: 0.07
-Nodes (44): openNBDSession(), FuzzRuns(), Dial(), Options, pinnedTLS(), Runs(), checkData(), diskByte() (+36 more)
+Cohesion: 0.12
+Nodes (35): FuzzRuns(), Dial(), Runs(), checkData(), diskByte(), newFakeHost(), onlyAES128(), openRead() (+27 more)
 
 ### Community 10 - "ELF Debug Inspection"
 Cohesion: 0.07
 Nodes (40): Expectation, Export, Facts, Function, gateResult, goInitPlan, goInitState, Link (+32 more)
 
 ### Community 11 - "Fake Host Test Doubles"
-Cohesion: 0.07
-Nodes (12): fakeHost, position, atPosition(), deviceKey(), discover(), diskAtPosition(), Reader, sharedPV() (+4 more)
+Cohesion: 0.06
+Nodes (5): fakeHost, Reader, SystemHost, Disk, fakeLocal
 
-### Community 12 - "CABI Error Exports"
-Cohesion: 0.16
-Nodes (35): cause(), code(), goString(), initialized(), notSupported(), ovx_go_access(), ovx_go_check_repair(), ovx_go_cleanup() (+27 more)
+### Community 12 - "exports.go"
+Cohesion: 0.06
+Nodes (84): cause(), code(), goString(), initialized(), notSupported(), ovx_go_access(), ovx_go_check_repair(), ovx_go_cleanup() (+76 more)
 
 ### Community 13 - "NBD-0002 Async Read Faults"
 Cohesion: 0.05
@@ -258,19 +264,19 @@ Nodes (25): NBD-0002 Async reads, network faults and real consumers over NBD and
 
 ### Community 14 - "Go Slice and Action Helpers"
 Cohesion: 0.10
-Nodes (27): Action, Entry, Options, Plan, faultpoint(), contains(), dsJoin(), findAttached() (+19 more)
+Nodes (20): Action, Entry, Options, Plan, faultpoint(), dsJoin(), Attachment, holdReads() (+12 more)
 
 ### Community 15 - "HotAdd Worker Boot Order"
 Cohesion: 0.06
 Nodes (38): HOTADD-0036 worker without its own disk, booted from a live ISO, CD-ROM or network boot must stay first in boot order, Live-ISO lvm2 with event activation activates the source volume group on attach, HOTADD-0038 source NFS datastore stops answering during a read (S3), Candidate cleans up after a worker crash with a disk attached; reference does not, Worker kernel panics on NMI hard lockup while ESXi holds its vCPUs during NFS outage, HOTADD-0039 NFS datastore outage under HotAdd read on vSphere 8.0 (S3b), ESXi 8.0.3 does not hold worker vCPUs during NFS outage; the read simply waits (+30 more)
 
 ### Community 16 - "Source Disk Options"
-Cohesion: 0.18
-Nodes (38): SourceDisk, Open(), journalFiles(), newHost(), setup(), source(), TestAssessMatchesRecover(), TestAttachErrorAfterEffectIsRolledBack() (+30 more)
+Cohesion: 0.16
+Nodes (40): contains(), SourceDisk, Open(), journalFiles(), newHost(), newPlatform(), setup(), source() (+32 more)
 
 ### Community 17 - "govmomi Fault Types"
-Cohesion: 0.08
-Nodes (26): firstMissing(), TestInChain(), TestIndependentBackings(), TestRDMChain(), TestSelectLink(), chainLinks(), chainPaths(), diskBacking() (+18 more)
+Cohesion: 0.07
+Nodes (28): firstMissing(), TestInChain(), TestIndependentBackings(), TestRDMChain(), TestSelectLink(), simulatorVMs(), chainLinks(), chainPaths() (+20 more)
 
 ### Community 18 - "VDDK 8 Reference Decisions"
 Cohesion: 0.08
@@ -281,16 +287,16 @@ Cohesion: 0.07
 Nodes (25): D-0003 HotAdd first; SAN unsupported by design, D-0012 Library swap test, D-0014 HotAdd implementation, D-0016 HotAdd on proxies without disk IDs, D-0017 Read-ahead tolerates reordered requests inside its window, D-0018 A shared BIOS UUID refuses HotAdd, as the reference does, D-0019 Read-ahead releases what lies behind a single reader, D-0020 A single reader's look-ahead grows with its sequential run (+17 more)
 
 ### Community 20 - "Connection Lifecycle"
-Cohesion: 0.09
-Nodes (17): Connection, hasMode(), namesSAN(), nbdsslToNBD(), open(), openHotAdd(), ParseModes(), openNBD() (+9 more)
+Cohesion: 0.10
+Nodes (11): Connection, hasMode(), nbdsslToNBD(), open(), openNBD(), TestNBDSSLToNBDOnlyWhenListedAndStreamTLSRefused(), AESHardware(), Timer (+3 more)
 
 ### Community 21 - "Journal and Attachment Tests"
-Cohesion: 0.14
-Nodes (26): TestWriteAttachments(), TestWriteJournal(), captureLog(), TestDiskStatisticsAtClose(), TestDiskStatisticsWithoutReads(), withoutPrefix(), TestConcurrent(), TestLifecycle() (+18 more)
+Cohesion: 0.12
+Nodes (29): TestUsageAndExitCodes(), captureLog(), TestConnectionSummary(), TestDiskStatisticsAtClose(), TestDiskStatisticsWithoutReads(), withoutPrefix(), TestConcurrent(), TestLifecycle() (+21 more)
 
-### Community 22 - "Async Finish and Wipe"
-Cohesion: 0.16
-Nodes (21): Cleanup(), EndAccess(), PrepareForAccess(), withSession(), ReadAsync(), TestReadAsyncEndingAtOnceCallsBackBeforeReturning(), Wait(), codeErr() (+13 more)
+### Community 22 - "Config"
+Cohesion: 0.14
+Nodes (16): collectConfig(), Empty(), Config, Load(), TestLoadLimits(), configureProxy(), journalDir(), openHotAdd() (+8 more)
 
 ### Community 23 - "HotAdd Qualification Catalogue"
 Cohesion: 0.08
@@ -300,33 +306,33 @@ Nodes (23): D-0023 HotAdd negative cases, D-0026 HotAdd qualification catalogue,
 Cohesion: 0.18
 Nodes (19): VixDiskLib_FreeInfo(), VixDiskLib_GetInfo(), main(), usage(), main(), on_done(), usage(), conn_opt() (+11 more)
 
-### Community 25 - "Disk Allocation Accounting"
-Cohesion: 0.11
-Nodes (9): allocation, Disk, inflight, metadata, readStats, mibPerSec(), readLine(), engine (+1 more)
+### Community 25 - "Disk"
+Cohesion: 0.24
+Nodes (5): allocation, Disk, metadata, readStats, mibPerSec()
 
-### Community 26 - "govmomi Task Fakes"
-Cohesion: 0.12
-Nodes (9): fakePlatform, AttachSpec, DetachSpec, newPlatform(), AttachConfigSpec(), DetachConfigSpec(), diskMode(), waitTask() (+1 more)
+### Community 26 - "Record"
+Cohesion: 0.15
+Nodes (15): TestWriteAttachments(), TestWriteJournal(), idMode(), ownerStatus(), pidRunning(), sortedRecords(), writeJournal(), writeRecord() (+7 more)
 
 ### Community 27 - "Config and Benchmarks"
-Cohesion: 0.18
-Nodes (16): TestSingleReaderExtentsWithSmallGaps(), alignedBuffer(), New(), BenchmarkRandomSmallReads(), newMem(), TestBuffersAreAligned(), TestCloseWaitsForReadsInFlight(), TestConcurrentReaders() (+8 more)
+Cohesion: 0.17
+Nodes (15): TestSingleReaderExtentsWithSmallGaps(), New(), BenchmarkRandomSmallReads(), newMem(), TestCloseWaitsForReadsInFlight(), TestConcurrentReaders(), TestDisabledConfigReadsThrough(), TestPersistentErrorIsReported() (+7 more)
 
 ### Community 28 - "NBD Disk Read Path"
-Cohesion: 0.13
-Nodes (8): nbdDisk, nbdSession, closeNBDSession(), Reader, max64(), min64(), block, Source
+Cohesion: 0.18
+Nodes (5): closeNBDSession(), alignedBuffer(), Reader, TestBuffersAreAligned(), block
 
 ### Community 29 - "Fuzz Parser Tests"
-Cohesion: 0.11
-Nodes (18): FuzzParse(), FuzzParseModes(), FuzzParseVMXSpec(), FuzzDecodeSkipZeros(), FuzzParseAllocationReply(), FuzzParseDDBReply(), FuzzParseIOPiece(), FuzzParseOpenReply() (+10 more)
+Cohesion: 0.15
+Nodes (14): FuzzParse(), FuzzParseVMXSpec(), FuzzDecodeSkipZeros(), FuzzParseAllocationReply(), FuzzParseDDBReply(), FuzzParseIOPiece(), decodeSkipZeros(), ParseAllocationReply() (+6 more)
 
-### Community 30 - "Host Identity Accessors"
-Cohesion: 0.16
-Nodes (7): LocalHost, Platform, ProxyInfo, IdentifyProxy(), identifyProxy(), IdentifyProxyForAttach(), ProxyCandidates()
+### Community 30 - "hotadd.go"
+Cohesion: 0.20
+Nodes (21): Controller, position, atPosition(), ChooseSlot(), deviceKey(), discover(), diskAtPosition(), findAttached() (+13 more)
 
 ### Community 31 - "Memory Reader Helpers"
-Cohesion: 0.11
-Nodes (5): memReader, alignedBuffer(), lower(), preadFull(), Device
+Cohesion: 0.06
+Nodes (11): memReader, alignedBuffer(), lower(), preadFull(), FuzzParseHCTL(), Host, ParseHCTL(), readTrim() (+3 more)
 
 ### Community 32 - "HotAdd Recovery Semantics"
 Cohesion: 0.12
@@ -341,16 +347,16 @@ Cohesion: 0.13
 Nodes (14): NBD-0021 Every ordered transport list, Empty transport list versus NULL, san:san:hotadd process abort in VMware library, NET-0005 Reference on a direct ESXi connection, ha-nfc-service object on direct connection, ApiType HostAgent on direct connection, hotadd alone with reader not a VM of the server, Known differences from VixDiskLib 8.0.3 (+6 more)
 
 ### Community 35 - "govmomi VM Controllers"
-Cohesion: 0.13
-Nodes (12): Controller, State, FuzzJournalRecord(), ChooseSlot(), mayHaveAttached(), FuzzDatastorePath(), parentDir(), scsiController() (+4 more)
+Cohesion: 0.18
+Nodes (9): FuzzDatastorePath(), AttachConfigSpec(), DetachConfigSpec(), diskMode(), parentDir(), scsiController(), splitDatastorePath(), TestDatastorePathHelpers() (+1 more)
 
-### Community 36 - "Connect and BIOS UUID Checks"
-Cohesion: 0.25
-Nodes (16): ovx_go_exit(), connectParams(), TestConnectRefusesSharedBIOSUUID(), TestConnectWithSharedBIOSUUIDAndOtherTransports(), Close(), Connect(), Disconnect(), ExitAll() (+8 more)
+### Community 36 - "Parse"
+Cohesion: 0.16
+Nodes (13): nbdSettings, canonical(), knownOwnKey(), Parse(), TestNotHonoured(), TestParse(), TestPublicNamePrefix(), TestTrailingComment() (+5 more)
 
 ### Community 37 - "TLS Refusal Handling"
-Cohesion: 0.23
-Nodes (6): TestTLSRefusal(), classic(), dial(), Conn, tlsRefusal(), tlsState()
+Cohesion: 0.17
+Nodes (11): nbdSession, openNBDSession(), TestTLSRefusal(), dial(), Conn, Options, Ticket, readLine() (+3 more)
 
 ### Community 38 - "Transport and ReadAsync Rules"
 Cohesion: 0.18
@@ -365,8 +371,8 @@ Cohesion: 0.23
 Nodes (13): Linux HotAdd device identification, Diagnostic bundle, HotAdd failure injection, HotAdd transport, HotAdd cleanup, HotAdd durable journal, HotAdd qualification catalogue, HotAdd recovery (+5 more)
 
 ### Community 41 - "Metadata Emit Path"
-Cohesion: 0.24
-Nodes (9): delivered(), emit(), emitIn(), Fn, Redact(), TestRedact(), channel, Level (+1 more)
+Cohesion: 0.17
+Nodes (13): login(), delivered(), emit(), emitIn(), Fn, init(), Redact(), SetLevels() (+5 more)
 
 ### Community 42 - "Chunked Read Concurrency"
 Cohesion: 0.17
@@ -385,12 +391,12 @@ Cohesion: 0.14
 Nodes (13): allowed_needed, functions, generation, links, max_glibc, reference, library, library_sha256 (+5 more)
 
 ### Community 46 - "Allocation Block Model"
-Cohesion: 0.22
+Cohesion: 0.24
 Nodes (9): Block, clipToChunks(), mergeBlocks(), blocksMiB(), TestClipToChunks(), TestClipToChunksEdges(), TestMergeBlocks(), modeLabel() (+1 more)
 
 ### Community 47 - "Gated Device Reader"
-Cohesion: 0.22
-Nodes (3): gatedReader, Device, Gate
+Cohesion: 0.16
+Nodes (8): gatedReader, Device, New(), TestClosedDeviceIgnored(), TestHoldDrainsAndLimits(), TestHoldTimesOut(), TestNoHoldNoLimit(), Gate
 
 ### Community 48 - "HotAdd Candidate Selection"
 Cohesion: 0.15
@@ -401,8 +407,8 @@ Cohesion: 0.19
 Nodes (9): NBD-0022 NBDSSL and NBD through Migratekit pipeline, Migratekit pipeline with nbdkit vddk and nbdcopy, Reader VM without AES instructions, NBD-0023 NBDSSL without AES instructions, Log warning at Open when no AES instructions, Several NFC sessions per disk candidate, Read-ahead for sequential ReadAsync candidate, TLS 1.2 AES-128-GCM offer on CPU without AES (+1 more)
 
 ### Community 50 - "Registry and Locking"
-Cohesion: 0.25
-Nodes (7): Kind, Registry, FuzzDecode(), Decode(), Encode(), NewRegistry(), TestRejectsForeignValues()
+Cohesion: 0.28
+Nodes (6): Kind, Registry, FuzzDecode(), Decode(), Encode(), NewRegistry()
 
 ### Community 51 - "Internal Package Map"
 Cohesion: 0.17
@@ -413,8 +419,8 @@ Cohesion: 0.31
 Nodes (11): Library swap test, vixcopy minimal C consumer, die(), fail(), field(), install_candidate(), inventory(), note() (+3 more)
 
 ### Community 53 - "VixDisk Info Helpers"
-Cohesion: 0.22
-Nodes (12): Info, GetInfo(), infoFrom(), infoFromChain(), infoFromChainErr(), FuzzInfoFromChain(), quietLog(), reader() (+4 more)
+Cohesion: 0.24
+Nodes (11): Info, infoFrom(), infoFromChain(), infoFromChainErr(), FuzzInfoFromChain(), quietLog(), reader(), TestInfoFromChainMissingFile() (+3 more)
 
 ### Community 54 - "NBD Multi-Connection Limits"
 Cohesion: 0.18
@@ -424,13 +430,17 @@ Nodes (8): NBD-0026 One or several connections from slow datastore, CloudStack b
 Cohesion: 0.17
 Nodes (12): OpenVDDK binary kit README, Worker disk ID settings changed on first use, HotAdd worker VM requirements, Install via nbdkit libdir or file swap, Journal-based recovery after crash, Binary kit contents table, NBDSSL and NBD requirements, openvddk-admin recovery tool (+4 more)
 
-### Community 56 - "govmomi Simulator Fixtures"
-Cohesion: 0.21
-Nodes (10): simulatorVMs(), TestLoginDetectsESXi(), firstDiskPath(), hexColon(), mustPort(), TestResolveRefusesIndependentDisk(), TestSessionsLeaveNoConnections(), TestThumbprintPinning() (+2 more)
+### Community 56 - "Login"
+Cohesion: 0.12
+Nodes (21): greetingListener(), TestLoginDetectsESXi(), isAuthFault(), classifyTransport(), Login(), firstDiskPath(), hasExtra(), hexColon() (+13 more)
 
-### Community 57 - "NBD Open Error Codes"
-Cohesion: 0.18
-Nodes (7): nbdOpenCode(), TestNBDOpenCodeNoConnection(), CodeOf(), Code, errnoCode(), TestReadErrorCodes(), Error
+### Community 57 - "sync.Mutex"
+Cohesion: 0.20
+Nodes (5): inflight, openLog(), openOwnFile(), userName(), fileOut
+
+### Community 58 - "nbdDisk"
+Cohesion: 0.24
+Nodes (4): nbdDisk, max64(), min64(), Source
 
 ### Community 59 - "Architecture and ABI Status"
 Cohesion: 0.23
@@ -445,8 +455,8 @@ Cohesion: 0.20
 Nodes (10): NBD-0030 Release checks of 0.7.3-rc1, 0.7.3-rc1 release check matrix, NBD-0031 Release checks of 0.7.4-rc1, CBT changed-area checks with expected hash, ESXi host removed from and re-added to vCenter, 0.7.4 release build aedcc19, Direct connection to standalone ESXi, Observation records index (+2 more)
 
 ### Community 62 - "NFC Service Fallback"
-Cohesion: 0.33
-Nodes (9): greetingListener(), internalContentAnswer(), TestNfcServiceFallback(), TestNfcTicketESXi(), TestNfcTicketUnknownServiceObject(), TestNfcTicketVCenter(), TestTicketWithoutThumbprintRefused(), ticketAnswer() (+1 more)
+Cohesion: 0.38
+Nodes (8): internalContentAnswer(), TestNfcServiceFallback(), TestNfcTicketESXi(), TestNfcTicketUnknownServiceObject(), TestNfcTicketVCenter(), TestTicketWithoutThumbprintRefused(), ticketAnswer(), soapServer
 
 ### Community 63 - "Contract and Governance Policies"
 Cohesion: 0.20
@@ -457,8 +467,8 @@ Cohesion: 0.20
 Nodes (9): NBD-0025 Release checks of 0.7.2-rc1, Host refusing AES-128 offer test, Network faults during skipz read, skipz on Windows Server 2019 disk, virt-v2v -o null conversions as release check, NBD-0029 VDDK 8.0.3 rechecks on vSphere 6.7, HotAdd failed-Open error codes, virt-v2v conversions from vSphere 6.7 rechecked (+1 more)
 
 ### Community 65 - "IO Delivery Completion"
-Cohesion: 0.18
-Nodes (7): ioReadFull(), TestFailDuringDeliveryCompletesOnce(), FuzzParseAIOHeader(), FuzzReadLineRaw(), ParseAIOHeader(), readLineRaw(), skipZeros()
+Cohesion: 0.17
+Nodes (7): ioReadFull(), TestFailDuringDeliveryCompletesOnce(), FuzzParseAIOHeader(), FuzzReadLineRaw(), classic(), ParseAIOHeader(), readLineRaw()
 
 ### Community 66 - "C/Go ABI Boundary"
 Cohesion: 0.20
@@ -496,10 +506,6 @@ Nodes (5): Vix error model, NBD transport, NBDSSL transport, NFC authentication 
 Cohesion: 0.28
 Nodes (8): Honour skipz compression candidate, NBD-0024 Migratekit full copies measured on the wire, Migratekit full copy received bytes, skipz reply piece encoding first capture, NET-0004 Reads with zeros left out (skipz) over NFC, skipz code 3 piece encoding, skipz read request code 3, Strict skipz decoding in 0.7.2 candidate
 
-### Community 75 - "Trace Diff Tooling"
-Cohesion: 0.44
-Nodes (8): readKey, readVal, trace, cmdTraceDiff(), compareTraces(), diffLines(), parseTrace(), TestTraceDiff()
-
 ### Community 76 - "Contributing and DCO"
 Cohesion: 0.29
 Nodes (6): VixDiskLib_Write (UNSUPPORTED-BY-DESIGN), Developer Certificate of Origin sign-off, Licence headers on new source files, Pull request rules (one topic, template, maintainer merges), Pull request template and checklist, Private vulnerability reporting process
@@ -536,9 +542,9 @@ Nodes (6): NBD-0028 VMware NFC configuration keys observed, nfc ReadTimeoutMs an
 Cohesion: 0.47
 Nodes (5): HOTADD-0051 independent disks and raw device mappings over every transport, main reads independent disks over NBD and NBDSSL, even at a snapshot where live data is returned, Virtual-mode RDM attached over HotAdd as independent_nonpersistent (dev15), HOTADD-0052 0.6.26 checked before release, 0.6.26 carries HotAdd security review fixes and an SBOM
 
-### Community 86 - "IO Gate Behavior"
-Cohesion: 0.53
-Nodes (5): New(), TestClosedDeviceIgnored(), TestHoldDrainsAndLimits(), TestHoldTimesOut(), TestNoHoldNoLimit()
+### Community 86 - "spreadOver"
+Cohesion: 0.33
+Nodes (5): NewSpread(), spreadOver(), TestNewSpreadNeedsOneHandlePerSession(), TestSpreadRead(), TestSpreadReadRefused()
 
 ### Community 87 - "HotAdd Negative Cases"
 Cohesion: 0.40
@@ -547,10 +553,6 @@ Nodes (4): HOTADD-0021 negative and failure cases, reference vs candidate, Guest
 ### Community 88 - "NFC Reads Over TLS"
 Cohesion: 0.50
 Nodes (3): NET-0003 Reference NBD read over NFC, Descriptor keys AIO type 11, Read AIO type 7 44-byte structure
-
-### Community 89 - "HCTL Device Parsing"
-Cohesion: 0.40
-Nodes (4): FuzzParseHCTL(), ParseHCTL(), TestParseHCTL(), HCTL
 
 ### Community 90 - "Selftest Shell Helpers"
 Cohesion: 0.60
@@ -589,25 +591,25 @@ Nodes (3): inventory(), hotadd-observe.sh script, stamp()
   docs/observations/HOTADD-0049-robustness-and-identification-fix.md · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **160 isolated node(s):** `github.com/openvddk/openvddk`, `VixDiskLib C API`, `HotAdd cleanup`, `Read contract`, `Log line format` (+155 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 411 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **160 isolated node(s):** `github.com/openvddk/openvddk`, `Candidate attach time grows with disks already attached (open)`, `Both libraries return identical bytes for random block reads`, `Eight listed vCenter privileges suffice for the candidate; each missing one fails clearly`, `VixDiskLib_PrepareForAccess` (+155 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 413 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **45 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `fakeHost` connect `TLS and NBD Sessions` to `Go Admin Bundle and Journal`, `Disk Allocation Accounting`, `Journal and Attachment Tests`, `IO Delivery Completion`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
+- **Why does `Open()` connect `Source Disk Options` to `govmomi vSphere Objects`, `Fake Host Test Doubles`, `Go Slice and Action Helpers`, `UUID Parsing`, `Config`, `Config and Benchmarks`, `hotadd.go`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Are the 37 inferred relationships involving `Open()` (e.g. with `.abandon()` and `.rollback()`) actually correct?**
   _`Open()` has 37 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `github.com/openvddk/openvddk`, `VixDiskLib C API`, `HotAdd cleanup` to the rest of the system?**
+- **What connects `github.com/openvddk/openvddk`, `Candidate attach time grows with disks already attached (open)`, `Both libraries return identical bytes for random block reads` to the rest of the system?**
   _160 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Go Admin Bundle and Journal` be split into smaller, more focused modules?**
-  _Cohesion score 0.05951758209822726 - nodes in this community are weakly interconnected._
-- **Why does `Platform` connect `govmomi vSphere Objects` to `Go Admin Bundle and Journal`, `govmomi VM Controllers`, `Bundle Redaction Tests`, `Connection Lifecycle`, `govmomi Task Fakes`?**
-  _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Should `Go Config Collection` be split into smaller, more focused modules?**
-  _Cohesion score 0.05555555555555555 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06233130374741071 - nodes in this community are weakly interconnected._
+- **Why does `Op` connect `Chunked Read Concurrency` to `Go Admin Bundle and Journal`, `TLS Refusal Handling`, `Fuzz Parser Tests`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Should `C ABI Headers and Layout` be split into smaller, more focused modules?**
+  _Cohesion score 0.04389233954451346 - nodes in this community are weakly interconnected._
 
 ### Low-confidence Hints
 _AMBIGUOUS edges — the extractor was unsure. Verify before acting on these._
